@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小説ダウンローダー</title>
+</head>
+<body>
+    <h1>小説ダウンローダー</h1>
+    <input type="text" id="novelUrl" placeholder="URLを入力">
+    <button onclick="downloadNovel()">ダウンロード</button>
+    <p id="status"></p>
+
+    <script>
+        async function downloadNovel() {
+            const url = document.getElementById("novelUrl").value;
+            const response = await fetch("/fetch", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url: url, start_chapter: 1 })
+            });
+            const result = await response.json();
+            document.getElementById("status").innerText = result.message;
+        }
+    </script>
+</body>
+</html>
