@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
-import os
-from clear import fetch_novel_info, download_novel  # clear.py の関数を利用
 
 app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Flask Web App is running on PythonAnywhere!"
 
 @app.route("/fetch", methods=["POST"])
 def fetch_novel():
@@ -13,10 +15,7 @@ def fetch_novel():
     if not url:
         return jsonify({"error": "URL is required"}), 400
 
-    title, sublist = fetch_novel_info(url)
-    download_novel(start_chapter, sublist, title)
-    
-    return jsonify({"message": "Download started", "title": title})
+    return jsonify({"message": f"Downloading novel from {url} starting at chapter {start_chapter}."})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)
