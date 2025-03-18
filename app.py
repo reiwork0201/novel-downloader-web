@@ -17,5 +17,7 @@ def fetch_novel():
 
     return jsonify({"message": f"Downloading novel from {url} starting at chapter {start_chapter}."})
 
+# PythonAnywhereでは app.run() を使わない！
 if __name__ == "__main__":
-    app.run(debug=True)
+    # ローカル開発時のみ起動
+    app.run(debug=True, port=5050)
